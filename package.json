@@ -17,5 +17,9 @@
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.4.5",
     "ts-node": "^10.2.1"
+  },
+  "scripts": {
+    "deploy:dummy": "yarn hardhat deploy --tags DummyTokens --network mainnet",
+    "deploy:servers": "yarn hardhat deploy --tags Servers --network mainnet"
   }
 }

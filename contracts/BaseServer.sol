@@ -5,7 +5,6 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 interface IMasterChefV2 {
-    function deposit(uint256 pid, uint256 amount, address to) external;
     function withdraw(uint256 pid, uint256 amount, address to) external;
     function harvest(uint256 pid, address to) external;
 }

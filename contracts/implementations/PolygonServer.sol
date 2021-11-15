@@ -13,7 +13,14 @@ contract PolygonServer is BaseServer {
   constructor(uint256 _pid, address _dummyToken, address _minichef) BaseServer(_pid, _dummyToken, _minichef) {}
 
   function bridge() public override {
-    sushi.approve(address(polygonBridge), sushi.balanceOf(address(this)));
-    polygonBridge.depositFor(minichef, address(sushi), "");
+    uint256 sushiBalance = sushi.balanceOf(address(this));
+
+    sushi.approve(address(polygonBridge), sushiBalance);
+    polygonBridge.depositFor(minichef, address(sushi), toBytes(sushiBalance));
   }
+
+  function toBytes(uint256 x) internal pure returns (bytes memory b) {
+    b = new bytes(32);
+    assembly { mstore(add(b, 32), x) }
+}
 }

@@ -6,6 +6,18 @@ const contracts: any = {
     pid: 0,
     contract: "PolygonServer",
   },
+  HARMONY: {
+    pid: 1,
+    contract: "HarmonyServer",
+  },
+  XDAI: {
+    pid: 2,
+    contract: "xDaiServer",
+  },
+  CELO: {
+    pid: 3,
+    contract: "CeloServer",
+  },
 };
 
 module.exports = async function main({
