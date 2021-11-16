@@ -3,21 +3,31 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 const contracts: any = {
   MATIC: {
-    pid: 0,
+    pid: undefined,
     contract: "PolygonServer",
   },
   HARMONY: {
-    pid: 1,
+    pid: undefined,
     contract: "HarmonyServer",
   },
   XDAI: {
-    pid: 2,
+    pid: undefined,
     contract: "xDaiServer",
   },
   CELO: {
-    pid: 3,
+    pid: undefined,
     contract: "CeloServer",
   },
+  // ARBITRUM: { // not supported yet by anyswap, official arbitrum bridge is too complex
+  //   pid: 4,
+  //   contract: "AnyswapServer",
+  //   chainId: 42161
+  // },
+  MOONRIVER: {
+    pid: undefined,
+    contract: "AnyswapServer",
+    chainId: 1285
+  }
 };
 
 module.exports = async function main({
@@ -34,13 +44,16 @@ module.exports = async function main({
       args: [`${chain as any}-CHEF`, `${chain.substring(0, 1)}-CHEF`],
     });
 
+    if(!contracts[chain as any]?.pid) return
+
     const { address } = await deploy(contracts[chain as any].contract, {
       from: deployer,
       args: [
         contracts[chain as any].pid,
         dummyAddress,
         MINICHEF_ADDRESS[ChainId[chain as any] as any],
-      ],
+        contracts[chain as any]?.chainId
+      ].filter(e => e !== undefined),
     });
 
     console.log("Server:", chain, "-", address);
