@@ -12,8 +12,11 @@ const accounts = [`${process.env.ETH_PRIVATE_KEY}`];
 const config: HardhatUserConfig = {
   networks: {
     hardhat: {
-      loggingEnabled: false,
-      blockGasLimit: 10000000000,
+      forking: {
+        enabled: true,
+        url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
+        blockNumber: 13632879,
+      },
     },
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,

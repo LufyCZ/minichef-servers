@@ -8,14 +8,14 @@ interface ICeloBridge {
 }
 
 contract CeloServer is BaseServer {
-  ICeloBridge public constant celoBridge = ICeloBridge(0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47);
+  address public constant bridgeAddr = 0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47;
   
-  constructor(uint256 _pid, address _dummyToken, address _minichef) BaseServer(_pid, _dummyToken, _minichef) {}
+  constructor(uint256 _pid, address _minichef) BaseServer(_pid, _minichef) {}
 
   function bridge() public override {
     uint256 sushiBalance = sushi.balanceOf(address(this));
 
-    sushi.approve(address(celoBridge), sushiBalance);
-    celoBridge.send(address(sushi), sushiBalance, 1667591279, bytes32(uint256(uint160(minichef))));
+    sushi.approve(bridgeAddr, sushiBalance);
+    ICeloBridge(bridgeAddr).send(address(sushi), sushiBalance, 1667591279, bytes32(uint256(uint160(minichef))));
   }
 }

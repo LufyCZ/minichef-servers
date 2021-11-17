@@ -23,11 +23,11 @@ const contracts: any = {
   //   contract: "AnyswapServer",
   //   chainId: 42161
   // },
-  MOONRIVER: {
-    pid: undefined,
-    contract: "AnyswapServer",
-    chainId: 1285
-  }
+  // MOONRIVER: { // Moonriver briding is just simple ERC20 transfers to an EOA...
+  //   pid: undefined,
+  //   contract: "AnyswapServer",
+  //   chainId: 1285,
+  // },
 };
 
 module.exports = async function main({
@@ -38,22 +38,15 @@ module.exports = async function main({
   const [deployer] = await getUnnamedAccounts();
 
   for (const chain of Object.keys(contracts)) {
-    // Get address of already deployed dummy
-    const { address: dummyAddress } = await deploy("DummyToken", {
-      from: deployer,
-      args: [`${chain as any}-CHEF`, `${chain.substring(0, 1)}-CHEF`],
-    });
-
-    if(!contracts[chain as any]?.pid) return
+    if (!contracts[chain as any]?.pid) return;
 
     const { address } = await deploy(contracts[chain as any].contract, {
       from: deployer,
       args: [
         contracts[chain as any].pid,
-        dummyAddress,
         MINICHEF_ADDRESS[ChainId[chain as any] as any],
-        contracts[chain as any]?.chainId
-      ].filter(e => e !== undefined),
+        contracts[chain as any]?.chainId,
+      ].filter((e) => e !== undefined),
     });
 
     console.log("Server:", chain, "-", address);
