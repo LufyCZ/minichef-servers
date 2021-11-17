@@ -180,7 +180,7 @@ describe("Servers", function () {
     });
   });
 
-  // Moonriver briding is just simple ERC20 transfers to an EOA...
+  // Moonriver bridging is just simple ERC20 transfers to an EOA...
   // describe("AnyswapServer", async function () {
   //   beforeEach("", async function () {
   //     this.Server = await (
