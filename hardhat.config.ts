@@ -2,14 +2,25 @@ import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
 import "hardhat-deploy";
-
-require("dotenv").config();
+import "dotenv/config";
 
 import { HardhatUserConfig } from "hardhat/types";
 
-const accounts = [`${process.env.ETH_PRIVATE_KEY}`];
+const accounts = {
+  mnemonic:
+    process.env.MNEMONIC ||
+    "test test test test test test test test test test test junk",
+};
 
 const config: HardhatUserConfig = {
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
+    dev: {
+      default: 1,
+    },
+  },
   networks: {
     hardhat: {
       forking: {
